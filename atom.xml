@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-01-07T17:32:37.254Z</updated>
+  <updated>2021-01-07T17:37:59.732Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,15 +21,14 @@
     <link href="http://example.com/2021/01/08/%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/"/>
     <id>http://example.com/2021/01/08/%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/</id>
     <published>2021-01-07T16:39:04.000Z</published>
-    <updated>2021-01-07T17:32:37.254Z</updated>
+    <updated>2021-01-07T17:37:59.732Z</updated>
     
-    <content type="html"><![CDATA[<p>Hello world!</p><p>今天也加班到了22点，在冷风中等了二十分钟的车。下份工作，不要选996了！</p>]]></content>
+    <content type="html"><![CDATA[<p>Hello world!</p>]]></content>
     
     
       
       
     <summary type="html">&lt;p&gt;Hello world!&lt;/p&gt;
-&lt;p&gt;今天也加班到了22点，在冷风中等了二十分钟的车。下份工作，不要选996了！&lt;/p&gt;
 </summary>
       
     
