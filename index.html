@@ -219,9 +219,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-05-27 17:39:40 / 修改时间：19:54:28" itemprop="dateCreated datePublished" datetime="2023-05-27T17:39:40+08:00">2023-05-27</time>
+      <time title="创建时间：2023-05-27 17:39:40" itemprop="dateCreated datePublished" datetime="2023-05-27T17:39:40+08:00">2023-05-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 00:48:01" itemprop="dateModified" datetime="2023-05-28T00:48:01+08:00">2023-05-28</time>
     </span>
 
   
@@ -240,8 +246,9 @@
 
 
 
-<h1 id="1、需求背景"><a href="#1、需求背景" class="headerlink" title="1、需求背景"></a>1、需求背景</h1><p>在网上注册各种账号时，往往需要多次填写密码。这些注册页面通常要求密码具有一定的复杂度，例如必须包含数字、大写和小写字母。为了保证账号安全，我不想在这些网站上使用完全相同的密码，这时就需要生成新的随机密码。我常用的方法是打开 <span class="exturl" data-url="aHR0cHM6Ly8xcGFzc3dvcmQuY29tLw==">https://1password.com/<i class="fa fa-external-link-alt"></i></span> 官网，然后复制一个随机生成的密码。</p>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8154228cbc5e4223b4b4b83116ec38c8~tplv-k3u1fbpfcp-zoom-1.image" alt="1password" loading="lazy"> </p>
+<h1 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h1><p>在网上注册各种账号时，往往需要多次填写密码。这些注册页面通常要求密码具有一定的复杂度，例如必须包含数字、大写和小写字母。为了保证账号安全，我不想在这些网站上使用完全相同的密码，这时就需要生成新的随机密码。我常用的方法是打开 <span class="exturl" data-url="aHR0cHM6Ly8xcGFzc3dvcmQuY29tLw==">https://1password.com/<i class="fa fa-external-link-alt"></i></span> 官网，然后复制一个随机生成的密码。</p>
+<img src="/2023-05-27-chatgpt-chrome-plugin/1password_website_page.png" class="" title="1password_website_page"> 
+
 <p>这种经历多了之后，我开始思考能否简化整个流程，毕竟每次都要打开 1password 的首页再复制还挺麻烦。加上最近看到 ChatGPT 流行起来以后，涌现出了很多优秀的开源浏览器插件项目，旁观他们的整个开发历程还挺令人激动的。于是我决定在 ChatGPT 的帮助下把这个生成随机密码的功能也做成一个 Chrome 插件，并记录下这段历程。</p>
           <!--noindex-->
             <div class="post-button">
