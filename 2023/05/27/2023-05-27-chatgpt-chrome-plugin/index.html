@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="img{ zoom:80%; }       需求背景在网上注册各种账号时，往往需要多次填写密码。这些注册页面通常要求密码具有一定的复杂度，例如必须包含数字、大写和小写字母。为了保证账号安全，我不想在这些网站上使用完全相同的密码，这时就需要生成新的随机密码。我常用的方法是打开 https:&#x2F;&#x2F;1password.com&#x2F; 官网，然后复制一个随机生成的密码。  这种经历多了之后，我开始思考能否简化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用 ChatGPT 开发自己的第一个 Chrome 插件">
+<meta property="og:url" content="https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/index.html">
+<meta property="og:site_name" content="zty5678&#39;s blog">
+<meta property="og:description" content="img{ zoom:80%; }       需求背景在网上注册各种账号时，往往需要多次填写密码。这些注册页面通常要求密码具有一定的复杂度，例如必须包含数字、大写和小写字母。为了保证账号安全，我不想在这些网站上使用完全相同的密码，这时就需要生成新的随机密码。我常用的方法是打开 https:&#x2F;&#x2F;1password.com&#x2F; 官网，然后复制一个随机生成的密码。  这种经历多了之后，我开始思考能否简化">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/1password_website_page.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/error_cannot_find_module_source-map-generator.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/solution_is_delete_node_modules_folder.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/npm_run_build_will_generate_dist_folder.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/load_unpacked_extension.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/the_ui_effect_of_starter_project.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/starter_project_is_using_typescript.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/use_a_online_typescript_website_to_execute.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/copy_the_generateRandomPassword_to_project.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/add_a_button_to_copy_password.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/ask_chatgpt_why_there_is_compile_error.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/chatgpt_s_suggestion_to_fix_error.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/the_ui_effect_of_generate_and_copy_random_password.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/ask_chatgpt_to_give_me_some_css.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/1c92f270c4b04b72ba8cd8a5a9df59a2~tplv-k3u1fbpfcp-zoom-1.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/add_external_css_file_support.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/fb40a8e571884bf2b47c19f467a40594~tplv-k3u1fbpfcp-zoom-1.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/import_the_style_css_file.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/the_ui_effect_after_adding_css.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/cannot_load_extension.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/now_after_copy_pwd_success_will_show_alert_dialog.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/ask_chatgpt_if_there_are_other_ways_to_show_copy_success_notifications.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/it_says_we_need_to_add_notifications_permission_here.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/use_chrome_notifications_create_to_show_notifications.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/create_notifications_fail.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/the_notifications_permission_should_added_to_manifest.json_in_public_folder.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/in_mac_system_setting_should_permit_chrome_show_notifications.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/finally_we_can_create_native_notificaions_from_chrom_plugin.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/when_create_notifications_iconUrl_attribute_is_important.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/you_cannot_directly_create_notifications_in_tsx_file.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/ask_chatgpt_to_use_another_way_to_show_copy_pwd_success_tips.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/the_ui_effect_of_new_way_to_show_success_tips.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/add_a_setting_entry.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/call_openOptionsPage_to_open_setting_page.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/setting_page_is_defined_by_options_ui_attribute.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/the_ui_effect_after_add_a_setting_button.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/the_setting_page.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/try_generate_crx_file_by_clicking_pack_the_extension.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/install_crx_file_fail.png">
+<meta property="article:published_time" content="2023-05-27T09:39:40.000Z">
+<meta property="article:modified_time" content="2024-07-23T15:03:16.714Z">
+<meta property="article:author" content="zty5678">
+<meta property="article:tag" content="chatGPT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zty5678.github.io/images/2023-05-27-chatgpt-chrome-plugin/1password_website_page.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>利用 ChatGPT 开发自己的第一个 Chrome 插件</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/05/28/2023-05-28-some-simple-c-matters-need-attention/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/03/11/2023-03-11-chatgpt/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&text=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&title=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&is_video=false&description=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=利用 ChatGPT 开发自己的第一个 Chrome 插件&body=Check out this article: https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&title=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&title=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&title=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&title=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&name=利用 ChatGPT 开发自己的第一个 Chrome 插件&description=&lt;style&gt; img{ zoom:80%; } &lt;/style&gt;
+
+
+
+
+
+&lt;h1 id=&#34;需求背景&#34;&gt;&lt;a href=&#34;#需求背景&#34; class=&#34;headerlink&#34; title=&#34;需求背景&#34;&gt;&lt;/a&gt;需求背景&lt;/h1&gt;&lt;p&gt;在网上注册各种账号时，往往需要多次填写密码。这些注册页面通常要求密码具有一定的复杂度，例如必须包含数字、大写和小写字母。为了保证账号安全，我不想在这些网站上使用完全相同的密码，这时就需要生成新的随机密码。我常用的方法是打开 &lt;a href=&#34;https://1password.com/&#34;&gt;https://1password.com/&lt;/a&gt; 官网，然后复制一个随机生成的密码。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/../images/2023-05-27-chatgpt-chrome-plugin/1password_website_page.png&#34; alt=&#34;1password_website_page&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这种经历多了之后，我开始思考能否简化整个流程，毕竟每次都要打开 1password 的首页再复制还挺麻烦。加上最近看到 ChatGPT 流行起来以后，涌现出了很多优秀的开源浏览器插件项目，旁观他们的整个开发历程还挺令人激动的。于是我决定在 ChatGPT 的帮助下把这个生成随机密码的功能也做成一个 Chrome 插件，并记录下这段历程。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&t=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">需求背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%BC%80%E5%8F%91"><span class="toc-number">2.</span> <span class="toc-text">开始开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E8%BF%90%E8%A1%8C-starter-%E5%B7%A5%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">尝试运行 starter 工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E5%AF%86%E7%A0%81%EF%BC%9F"><span class="toc-number">2.2.</span> <span class="toc-text">如何用代码生成随机密码？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8-generateRandomPassword-%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.</span> <span class="toc-text">应用 generateRandomPassword 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96"><span class="toc-number">2.4.</span> <span class="toc-text">界面美化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%A4%96%E8%81%94css%E6%96%87%E4%BB%B6"><span class="toc-number">2.5.</span> <span class="toc-text">添加外联css文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E5%A4%A9%E5%90%8E%E7%BB%A7%E7%BB%AD%E5%BC%80%E5%8F%91%EF%BC%8C%E5%8F%91%E7%8E%B0%E8%BF%90%E8%A1%8C%E5%A4%B1%E8%B4%A5"><span class="toc-number">2.6.</span> <span class="toc-text">几天后继续开发，发现运行失败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%A4%8D%E5%88%B6%E6%88%90%E5%8A%9F%E7%9A%84%E6%8F%90%E7%A4%BA%E6%A1%86"><span class="toc-number">2.7.</span> <span class="toc-text">优化复制成功的提示框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%A2%E4%B8%80%E7%A7%8D%E2%80%9C%E5%A4%8D%E5%88%B6%E6%88%90%E5%8A%9F%E2%80%9D%E7%9A%84%E6%8F%90%E7%A4%BA%E6%96%B9%E5%BC%8F"><span class="toc-number">2.8.</span> <span class="toc-text">换一种“复制成功”的提示方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E8%AE%BE%E7%BD%AE%E9%A1%B5%E9%9D%A2%E5%85%A5%E5%8F%A3"><span class="toc-number">2.9.</span> <span class="toc-text">添加一个设置页面入口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%93%E5%8C%85%E6%88%90-crx"><span class="toc-number">3.</span> <span class="toc-text">打包成 crx</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        利用 ChatGPT 开发自己的第一个 Chrome 插件
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">zty5678</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-05-27T09:39:40.000Z" class="dt-published" itemprop="datePublished">2023-05-27</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/chatGPT/" rel="tag">chatGPT</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <style> img{ zoom:80%; } </style>
+
+
+
+
+
+<h1 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h1><p>在网上注册各种账号时，往往需要多次填写密码。这些注册页面通常要求密码具有一定的复杂度，例如必须包含数字、大写和小写字母。为了保证账号安全，我不想在这些网站上使用完全相同的密码，这时就需要生成新的随机密码。我常用的方法是打开 <a target="_blank" rel="noopener" href="https://1password.com/">https://1password.com/</a> 官网，然后复制一个随机生成的密码。</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/1password_website_page.png" alt="1password_website_page"></p>
+<p>这种经历多了之后，我开始思考能否简化整个流程，毕竟每次都要打开 1password 的首页再复制还挺麻烦。加上最近看到 ChatGPT 流行起来以后，涌现出了很多优秀的开源浏览器插件项目，旁观他们的整个开发历程还挺令人激动的。于是我决定在 ChatGPT 的帮助下把这个生成随机密码的功能也做成一个 Chrome 插件，并记录下这段历程。</p>
+<span id="more"></span>
+
+
+
+<h1 id="开始开发"><a href="#开始开发" class="headerlink" title="开始开发"></a>开始开发</h1><p>我发现一些开源的 Chrome 插件项目都 fork 了这个工程：<a target="_blank" rel="noopener" href="https://github.com/chibat/chrome-extension-typescript-starter">https://github.com/chibat/chrome-extension-typescript-starter</a> ，那我也从它开始吧。</p>
+<p>在开始本项目之前，我对Chrome 插件的理解是：格式是crx，可以把crx文件或者解压后的文件拖曳到浏览器的“扩展程序”页面进行安装。</p>
+<p>我对 nodejs 工程的了解程度是：依赖库配置在 package.json 里，用<code>npm install</code>命令可以安装依赖库。除此以外，我本职工作是 Android 开发，并没有开发过 nodeJs 项目，只有一点点的 JavaScript 经验，知道<code>console.log</code>和<code>alert</code>，懂一点点 css。</p>
+<h2 id="尝试运行-starter-工程"><a href="#尝试运行-starter-工程" class="headerlink" title="尝试运行 starter 工程"></a>尝试运行 starter 工程</h2><p>运行<code>npm install </code> 时遇到了第一个问题:<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/error_cannot_find_module_source-map-generator.png" alt="搜到了一样的问题 error_cannot_find_module_source-map-generator.png"> </p>
+<p>解决办法:<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/solution_is_delete_node_modules_folder.png" alt="解决办法 solution_is_delete_node_modules_folder"></p>
+<p>然后运行<code>npm run build</code>，成功生成了 dist 文件夹：</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/npm_run_build_will_generate_dist_folder.png" alt="npm_run_build生成 dist 文件夹"></p>
+<p>再在“扩展程序”页面点击“加载已解压的扩展程序”按钮，加载整个 dist 文件夹：</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/load_unpacked_extension.png" alt="加载已解压的扩展程序"></p>
+<p>运行效果：<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/the_ui_effect_of_starter_project.png" alt="运行starter工程的效果"></p>
+<h2 id="如何用代码生成随机密码？"><a href="#如何用代码生成随机密码？" class="headerlink" title="如何用代码生成随机密码？"></a>如何用代码生成随机密码？</h2><p>看了 starter 工程的源码之后，我发现它用的开发语言是 TypeScript。</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/starter_project_is_using_typescript.png" alt="starter 工程的开发语言是 TypeScript.png"></p>
+<p>问下ChatGpt：“如何生成一个包含数字和大小写字母的指定长度的密码？”，我得到了一个这样的函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function generateRandomPassword(length: number): string &#123;</span><br><span class="line">  const lowerCaseLetters = &#x27;abcdefghijklmnopqrstuvwxyz&#x27;;</span><br><span class="line">  const upperCaseLetters = &#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;;</span><br><span class="line">  const numbers = &#x27;0123456789&#x27;;</span><br><span class="line">  const characters = lowerCaseLetters + upperCaseLetters + numbers;</span><br><span class="line">  let result = &#x27;&#x27;;</span><br><span class="line">  for (let i = 0; i &lt; length; i++) &#123;</span><br><span class="line">    const index = Math.floor(Math.random() * characters.length);</span><br><span class="line">    result += characters.charAt(index);</span><br><span class="line">  &#125;</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const password = generateRandomPassword(20);</span><br><span class="line">console.log(password);</span><br></pre></td></tr></table></figure>
+
+<p>我猜测浏览器的开发者工具的 console 里只支持 JavaScript ，不支持 TypeScript ，于是找了一个可以在线执行 TypeScript 的网站进行测试：</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/use_a_online_typescript_website_to_execute.png" alt="在线测试这个 TypeScript 函数 "></p>
+<p>输出结果符合预期。</p>
+<h2 id="应用-generateRandomPassword-函数"><a href="#应用-generateRandomPassword-函数" class="headerlink" title="应用 generateRandomPassword 函数"></a>应用 generateRandomPassword 函数</h2><p>接下来参照工程里的已有代码，把 generateRandomPassword 函数加进去：</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/copy_the_generateRandomPassword_to_project.png" alt="模仿已有代码"></p>
+<p>添加一个“copy password”按钮：</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/add_a_button_to_copy_password.png" alt="添加一个“copy password”按钮"></p>
+<p>但是不知道为什么<code>const success = copyToClipboard(currentPassword);</code> 这一行代码有编译错误。</p>
+<p>于是继续问 ChatGPT：<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/ask_chatgpt_why_there_is_compile_error.png" alt="ChatGPT的回答1"></p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/chatgpt_s_suggestion_to_fix_error.png" alt="ChatGPT的回答2"></p>
+<p>修改，运行，最终的效果是：</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/the_ui_effect_of_generate_and_copy_random_password.png" alt="运行效果"></p>
+<h2 id="界面美化"><a href="#界面美化" class="headerlink" title="界面美化"></a>界面美化</h2><p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/ask_chatgpt_to_give_me_some_css.png" alt="让ChatGPT生成css"><br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/1c92f270c4b04b72ba8cd8a5a9df59a2~tplv-k3u1fbpfcp-zoom-1.png" alt="image.png"></p>
+<h2 id="添加外联css文件"><a href="#添加外联css文件" class="headerlink" title="添加外联css文件"></a>添加外联css文件</h2><p>添加css-loader和style-loader，以支持外联css文件：</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/add_external_css_file_support.png" alt="添加css-loader和style-loader"></p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/fb40a8e571884bf2b47c19f467a40594~tplv-k3u1fbpfcp-zoom-1.png" alt="修改webpack.common.js，添加css文件的支持"></p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/import_the_style_css_file.png" alt="引入外联css文件"></p>
+<p>效果没变：<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/the_ui_effect_after_adding_css.png" alt="最终运行效果"></p>
+<h2 id="几天后继续开发，发现运行失败"><a href="#几天后继续开发，发现运行失败" class="headerlink" title="几天后继续开发，发现运行失败"></a>几天后继续开发，发现运行失败</h2><p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/cannot_load_extension.png" alt="添加到Chrome时失败"></p>
+<p>原来在选择“已解压的扩展程序”时，必须要选择 dist 目录才行😄。</p>
+<h2 id="优化复制成功的提示框"><a href="#优化复制成功的提示框" class="headerlink" title="优化复制成功的提示框"></a>优化复制成功的提示框</h2><p>目前密码复制成功后，会弹出这样的 alert 对话框，会打断使用体验：</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/now_after_copy_pwd_success_will_show_alert_dialog.png" alt="alert对话框会打断使用体验"></p>
+<p>继续问ChatGPT有没有更好的做法：</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/ask_chatgpt_if_there_are_other_ways_to_show_copy_success_notifications.png" alt="莫非要使用 chrome 的通知 API？"></p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/it_says_we_need_to_add_notifications_permission_here.png" alt="添加 notifications 权限"></p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/use_chrome_notifications_create_to_show_notifications.png" alt="使用 chrome.notifications.create"></p>
+<p>结果编译报错了：<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/create_notifications_fail.png" alt="编译报错"></p>
+<p>最后发现是找错了manifest.json！权限要设置到 public 目录下的 manifest.json 里:<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/the_notifications_permission_should_added_to_manifest.json_in_public_folder.png" alt="public 目录下的 manifest.json "></p>
+<p>现在不报错了，但是复制密码后还是没有看到成功提示的通知，为什么呢？</p>
+<p>经过一番摸索，原来还需要打开 Chrome 浏览器的通知权限！<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/in_mac_system_setting_should_permit_chrome_show_notifications.png" alt="Chrome 浏览器的通知权限开关"></p>
+<p>效果：<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/finally_we_can_create_native_notificaions_from_chrom_plugin.png" alt="复制成功后会弹出系统通知"></p>
+<p>另外还有一个插曲，我发现<code>console.log</code>无法打印日志了。最后才发现，<code>chrome.notifications.create </code> 和  <code>console.log</code>在 popup.tsx 里执行是无法生效的，必须放到 background.ts 里。</p>
+<p>iconUrl字段的值也要注意，如果设置错误，会报一个”Unable to download all specified images”的异常： </p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/when_create_notifications_iconUrl_attribute_is_important.png" alt="image.png"></p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/you_cannot_directly_create_notifications_in_tsx_file.png" alt="image.png"></p>
+<p><strong>经过这么多折腾，虽然成功地弹出了提示，但是效果完全不是我想要的，而且用户可能会关闭 Chrome 的通知权限。</strong></p>
+<h2 id="换一种“复制成功”的提示方式"><a href="#换一种“复制成功”的提示方式" class="headerlink" title="换一种“复制成功”的提示方式"></a>换一种“复制成功”的提示方式</h2><p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/ask_chatgpt_to_use_another_way_to_show_copy_pwd_success_tips.png" alt="问问神奇的ChatGPT吧"></p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/the_ui_effect_of_new_way_to_show_success_tips.png" alt="最终效果！"></p>
+<h2 id="添加一个设置页面入口"><a href="#添加一个设置页面入口" class="headerlink" title="添加一个设置页面入口"></a>添加一个设置页面入口</h2><p>问问ChatGPT，怎么添加一个设置按钮，点击后打开设置页面。</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/add_a_setting_entry.png" alt="问问ChatGPT"></p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/call_openOptionsPage_to_open_setting_page.png" alt="image.png"></p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/setting_page_is_defined_by_options_ui_attribute.png" alt="image.png"></p>
+<p>运行效果：</p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/the_ui_effect_after_add_a_setting_button.png" alt="image.png"></p>
+<p><img src="/../images/2023-05-27-chatgpt-chrome-plugin/the_setting_page.png" alt="image.png"></p>
+<h1 id="打包成-crx"><a href="#打包成-crx" class="headerlink" title="打包成 crx"></a>打包成 crx</h1><p>点击“打包扩展程序”后选择dist文件夹，即可打包成crx文件：<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/try_generate_crx_file_by_clicking_pack_the_extension.png" alt="image.png"></p>
+<p>但是在安装crx文件时，Chrome给出了这样的提示：<br><img src="/../images/2023-05-27-chatgpt-chrome-plugin/install_crx_file_fail.png" alt="image.png"></p>
+<p>应该是 Chrome 政策发生了变化，不再允许安装未上架的 crx 文件。我还记得以前有很多开源项目把 crx 文件放在他们的Github release，以方便用户直接下载并安装。而现在，如果一个 Chrome 插件没有上架到插件商店里，就只能通过“加载已解压的扩展程序”的方式来手动安装使用了。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这是我开发的第一个 Chrome 插件，功能特别简单。还好很多编程语言都是共通的，整个过程没有我之前想象得那么难。ChatGPT 确实能够解决不少开发中遇到的问题，但它并不全能，至少现阶段还不能完全取代搜索引擎。</p>
+<p>最后贴下项目地址： <a target="_blank" rel="noopener" href="https://github.com/zty5678/chrome-extension-password-generator">https://github.com/zty5678/chrome-extension-password-generator</a> ，目前只能算是个半成品，还有很多优化的空间。</p>
+<p>另外还要感谢下 <a target="_blank" rel="noopener" href="https://github.com/Bin-Huang/chatbox">https://github.com/Bin-Huang/chatbox</a> ，一个免费好用的 ChatGPT 第三方客户端。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">需求背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%BC%80%E5%8F%91"><span class="toc-number">2.</span> <span class="toc-text">开始开发</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E8%BF%90%E8%A1%8C-starter-%E5%B7%A5%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">尝试运行 starter 工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E5%AF%86%E7%A0%81%EF%BC%9F"><span class="toc-number">2.2.</span> <span class="toc-text">如何用代码生成随机密码？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8-generateRandomPassword-%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.</span> <span class="toc-text">应用 generateRandomPassword 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96"><span class="toc-number">2.4.</span> <span class="toc-text">界面美化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%A4%96%E8%81%94css%E6%96%87%E4%BB%B6"><span class="toc-number">2.5.</span> <span class="toc-text">添加外联css文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E5%A4%A9%E5%90%8E%E7%BB%A7%E7%BB%AD%E5%BC%80%E5%8F%91%EF%BC%8C%E5%8F%91%E7%8E%B0%E8%BF%90%E8%A1%8C%E5%A4%B1%E8%B4%A5"><span class="toc-number">2.6.</span> <span class="toc-text">几天后继续开发，发现运行失败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%A4%8D%E5%88%B6%E6%88%90%E5%8A%9F%E7%9A%84%E6%8F%90%E7%A4%BA%E6%A1%86"><span class="toc-number">2.7.</span> <span class="toc-text">优化复制成功的提示框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%A2%E4%B8%80%E7%A7%8D%E2%80%9C%E5%A4%8D%E5%88%B6%E6%88%90%E5%8A%9F%E2%80%9D%E7%9A%84%E6%8F%90%E7%A4%BA%E6%96%B9%E5%BC%8F"><span class="toc-number">2.8.</span> <span class="toc-text">换一种“复制成功”的提示方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E8%AE%BE%E7%BD%AE%E9%A1%B5%E9%9D%A2%E5%85%A5%E5%8F%A3"><span class="toc-number">2.9.</span> <span class="toc-text">添加一个设置页面入口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%93%E5%8C%85%E6%88%90-crx"><span class="toc-number">3.</span> <span class="toc-text">打包成 crx</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&text=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&title=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&is_video=false&description=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=利用 ChatGPT 开发自己的第一个 Chrome 插件&body=Check out this article: https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&title=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&title=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&title=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&title=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&name=利用 ChatGPT 开发自己的第一个 Chrome 插件&description=&lt;style&gt; img{ zoom:80%; } &lt;/style&gt;
+
+
+
+
+
+&lt;h1 id=&#34;需求背景&#34;&gt;&lt;a href=&#34;#需求背景&#34; class=&#34;headerlink&#34; title=&#34;需求背景&#34;&gt;&lt;/a&gt;需求背景&lt;/h1&gt;&lt;p&gt;在网上注册各种账号时，往往需要多次填写密码。这些注册页面通常要求密码具有一定的复杂度，例如必须包含数字、大写和小写字母。为了保证账号安全，我不想在这些网站上使用完全相同的密码，这时就需要生成新的随机密码。我常用的方法是打开 &lt;a href=&#34;https://1password.com/&#34;&gt;https://1password.com/&lt;/a&gt; 官网，然后复制一个随机生成的密码。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/../images/2023-05-27-chatgpt-chrome-plugin/1password_website_page.png&#34; alt=&#34;1password_website_page&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这种经历多了之后，我开始思考能否简化整个流程，毕竟每次都要打开 1password 的首页再复制还挺麻烦。加上最近看到 ChatGPT 流行起来以后，涌现出了很多优秀的开源浏览器插件项目，旁观他们的整个开发历程还挺令人激动的。于是我决定在 ChatGPT 的帮助下把这个生成随机密码的功能也做成一个 Chrome 插件，并记录下这段历程。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zty5678.github.io/2023/05/27/2023-05-27-chatgpt-chrome-plugin/&t=利用 ChatGPT 开发自己的第一个 Chrome 插件"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    zty5678
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

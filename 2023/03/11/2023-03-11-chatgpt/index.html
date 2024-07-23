@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="img{ zoom:80%; }       对于普通人写好评输入：   为外卖餐厅生成一条好评，你吃的是：麻辣烫  输出：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如果向朋友推荐chatGPT，我会举哪些例子？">
+<meta property="og:url" content="https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/index.html">
+<meta property="og:site_name" content="zty5678&#39;s blog">
+<meta property="og:description" content="img{ zoom:80%; }       对于普通人写好评输入：   为外卖餐厅生成一条好评，你吃的是：麻辣烫  输出：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-good-review-example.jpg">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-paper-topic-direction.jpg">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-translation-example.jpg">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-leave-note-example.jpg">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-identify-words-example.jpg">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-gen-english-sentence.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-extract-words-output-json.png">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-format-json-example.jpg">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-json-bean-example.jpg">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-generate-code-using-gson.jpg">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-extract-dialogues.jpg">
+<meta property="og:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-xiaohongshu-post.png">
+<meta property="article:published_time" content="2023-03-11T07:51:05.913Z">
+<meta property="article:modified_time" content="2024-07-23T15:03:37.647Z">
+<meta property="article:author" content="zty5678">
+<meta property="article:tag" content="chatGPT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zty5678.github.io/images/2023-03-11-chatgpt/image-good-review-example.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>如果向朋友推荐chatGPT，我会举哪些例子？</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/05/27/2023-05-27-chatgpt-chrome-plugin/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&text=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&title=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&is_video=false&description=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=如果向朋友推荐chatGPT，我会举哪些例子？&body=Check out this article: https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&title=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&title=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&title=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&title=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&name=如果向朋友推荐chatGPT，我会举哪些例子？&description=&lt;style&gt; img{ zoom:80%; } &lt;/style&gt;
+
+
+
+
+
+&lt;h2 id=&#34;对于普通人&#34;&gt;&lt;a href=&#34;#对于普通人&#34; class=&#34;headerlink&#34; title=&#34;对于普通人&#34;&gt;&lt;/a&gt;对于普通人&lt;/h2&gt;&lt;h3 id=&#34;写好评&#34;&gt;&lt;a href=&#34;#写好评&#34; class=&#34;headerlink&#34; title=&#34;写好评&#34;&gt;&lt;/a&gt;写好评&lt;/h3&gt;&lt;p&gt;输入： &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;为外卖餐厅生成一条好评，你吃的是：麻辣烫&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;输出：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/../images/2023-03-11-chatgpt/image-good-review-example.jpg&#34; alt=&#34;image-good-review-example&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&t=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E6%99%AE%E9%80%9A%E4%BA%BA"><span class="toc-number">1.</span> <span class="toc-text">对于普通人</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%A5%BD%E8%AF%84"><span class="toc-number">1.1.</span> <span class="toc-text">写好评</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E5%AD%A6%E7%94%9F%E3%80%81%E6%89%93%E5%B7%A5%E4%BA%BA"><span class="toc-number">2.</span> <span class="toc-text">对于学生、打工人</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%AE%E4%BD%A0%E6%89%BE%E8%AE%BA%E6%96%87%E6%80%9D%E8%B7%AF"><span class="toc-number">2.1.</span> <span class="toc-text">帮你找论文思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%8B%B1%E8%AF%AD"><span class="toc-number">2.2.</span> <span class="toc-text">学习英语</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BF%BB%E8%AF%91"><span class="toc-number">2.2.1.</span> <span class="toc-text">翻译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E8%8B%B1%E8%AF%AD%E4%BD%9C%E6%96%87"><span class="toc-number">2.2.2.</span> <span class="toc-text">写英语作文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E5%8F%A5%E5%AD%90%E9%87%8C%E7%9A%84%E7%94%9F%E8%AF%8D"><span class="toc-number">2.2.3.</span> <span class="toc-text">识别句子里的生词</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E8%8B%B1%E8%AF%AD%E4%BE%8B%E5%8F%A5"><span class="toc-number">2.2.4.</span> <span class="toc-text">生成英语例句</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E5%BC%80%E5%8F%91%E8%80%85"><span class="toc-number">3.</span> <span class="toc-text">对于开发者</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%BE%E5%87%BA%E7%94%9F%E8%AF%8D%E5%B9%B6%E4%BB%A5json%E6%A0%BC%E5%BC%8F%E8%BE%93%E5%87%BA"><span class="toc-number">3.1.</span> <span class="toc-text">找出生词并以json格式输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96json"><span class="toc-number">3.2.</span> <span class="toc-text">格式化json</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90json%E8%A7%A3%E6%9E%90%E4%BB%A3%E7%A0%81"><span class="toc-number">3.3.</span> <span class="toc-text">生成json解析代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E5%8F%A5%E5%AD%90%E9%87%8C%E7%9A%84%E5%AF%B9%E8%AF%9D"><span class="toc-number">3.4.</span> <span class="toc-text">识别句子里的对话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90"><span class="toc-number">3.5.</span> <span class="toc-text">文本情感分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%9C%E6%96%87%E5%AD%97%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90"><span class="toc-number">3.6.</span> <span class="toc-text">颜文字情感分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E8%87%AA%E5%AA%92%E4%BD%93"><span class="toc-number">4.</span> <span class="toc-text">对于自媒体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BA%A2%E4%B9%A6%E6%96%87%E6%A1%88"><span class="toc-number">4.1.</span> <span class="toc-text">小红书文案</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        如果向朋友推荐chatGPT，我会举哪些例子？
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">zty5678</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-03-11T07:51:05.913Z" class="dt-published" itemprop="datePublished">2023-03-11</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/chatGPT/" rel="tag">chatGPT</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <style> img{ zoom:80%; } </style>
+
+
+
+
+
+<h2 id="对于普通人"><a href="#对于普通人" class="headerlink" title="对于普通人"></a>对于普通人</h2><h3 id="写好评"><a href="#写好评" class="headerlink" title="写好评"></a>写好评</h3><p>输入： </p>
+<blockquote>
+<p><strong>为外卖餐厅生成一条好评，你吃的是：麻辣烫</strong></p>
+</blockquote>
+<p>输出：</p>
+<p><img src="/../images/2023-03-11-chatgpt/image-good-review-example.jpg" alt="image-good-review-example"></p>
+<span id="more"></span>
+
+<h2 id="对于学生、打工人"><a href="#对于学生、打工人" class="headerlink" title="对于学生、打工人"></a>对于学生、打工人</h2><h3 id="帮你找论文思路"><a href="#帮你找论文思路" class="headerlink" title="帮你找论文思路"></a>帮你找论文思路</h3><p>输入：</p>
+<blockquote>
+<p>英语专业，写论文，有什么方向可以写呢？</p>
+</blockquote>
+<p>输出：<br><img src="/../images/2023-03-11-chatgpt/image-paper-topic-direction.jpg" alt="image-paper-topic-direction"></p>
+<h3 id="学习英语"><a href="#学习英语" class="headerlink" title="学习英语"></a>学习英语</h3><h4 id="翻译"><a href="#翻译" class="headerlink" title="翻译"></a>翻译</h4><p>输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Once when I was six years old I saw a magnificent picture in a book, called True Stories from Nature, about the primeval forest. It was a picture of a boa constrictor in the act of swallowing an animal. Here is a copy of the drawing.</span><br></pre></td></tr></table></figure>
+<p>输出：<br><img src="/../images/2023-03-11-chatgpt/image-translation-example.jpg" alt="image-20230311162303981"></p>
+<p>截图来自Mac上的翻译工具 <a target="_blank" rel="noopener" href="https://apps.apple.com/cn/app/bob-%E7%BF%BB%E8%AF%91%E5%92%8C-ocr-%E5%B7%A5%E5%85%B7/id1630034110?mt=12">Bob - 翻译和 OCR 工具</a>，使用了<a target="_blank" rel="noopener" href="https://github.com/yetone/bob-plugin-openai-translator">OpenAI翻译插件</a>。</p>
+<p>可以看出，某种程度上OpenAI的翻译质量要好一些。</p>
+<h4 id="写英语作文"><a href="#写英语作文" class="headerlink" title="写英语作文"></a>写英语作文</h4><p>输入：</p>
+<blockquote>
+<p><strong>假定你是李华，正在英国接受英语培训，住在一户英国人家里。今天你的房东Mrs. Wilson不在家，你准备外出，请给Mrs. Wilson写一留言条。</strong></p>
+</blockquote>
+<p>输出：<br><img src="/../images/2023-03-11-chatgpt/image-leave-note-example.jpg" alt="image-leave-note-example"></p>
+<h4 id="识别句子里的生词"><a href="#识别句子里的生词" class="headerlink" title="识别句子里的生词"></a>识别句子里的生词</h4><p>输入：</p>
+<blockquote>
+<p>识别这段英语中的生词，并给出每个生词的翻译。<br>Once when I was six years old I saw a magnificent picture in a book, called True Stories from Nature, about the primeval forest. It was a picture of a boa constrictor in the act of swallowing an animal. Here is a copy of the drawing.  </p>
+</blockquote>
+<p>输出：<br><img src="/../images/2023-03-11-chatgpt/image-identify-words-example.jpg" alt="image-identify-words-example"></p>
+<h4 id="生成英语例句"><a href="#生成英语例句" class="headerlink" title="生成英语例句"></a>生成英语例句</h4><p>输入：</p>
+<blockquote>
+<p>生成几个英文句子， 把生词的中文翻译放到对应的生词的后边用括号括起来。</p>
+</blockquote>
+<p>输出：</p>
+<p><img src="/../images/2023-03-11-chatgpt/image-gen-english-sentence.png" alt="image-gen-english-sentence"></p>
+<h2 id="对于开发者"><a href="#对于开发者" class="headerlink" title="对于开发者"></a>对于开发者</h2><h3 id="找出生词并以json格式输出"><a href="#找出生词并以json格式输出" class="headerlink" title="找出生词并以json格式输出"></a>找出生词并以json格式输出</h3><p>输入：</p>
+<blockquote>
+<p>Want to extract unfamiliar words by Lexile 1000 standard.<br>Return result in JSON format without any explanation.<br>The expect JSON format is like this:[“word1”, “word2”].</p>
+<p>The content is as follows:</p>
+<p>This is an article from my opinion and professional experience, taking into account different opinions among the Android developer community, also constantly reviewing the guides provided by Google for Android.</p>
+</blockquote>
+<p>输出：</p>
+<p><img src="/../images/2023-03-11-chatgpt/image-extract-words-output-json.png" alt="image-extract-words-output-json"></p>
+<h3 id="格式化json"><a href="#格式化json" class="headerlink" title="格式化json"></a>格式化json</h3><blockquote>
+<p>{“words”:[{“word”:”name”,”desc”:”xxx”},{“word”:”age”,”desc”:”xxx”}]} 对这段json进行格式化， 使其好看一点</p>
+</blockquote>
+<p><img src="/../images/2023-03-11-chatgpt/image-format-json-example.jpg" alt="image-format-json-example"></p>
+<p>以上截图来自Chrome插件 <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/chatgpt-for-google/jgjaeacdkonaoafenlfkkkmbaopkbilf">ChatGPT for Google</a>。</p>
+<h3 id="生成json解析代码"><a href="#生成json解析代码" class="headerlink" title="生成json解析代码"></a>生成json解析代码</h3><p>输入：</p>
+<blockquote>
+<p>用java生成一段代码，统计一个json文件里所有的word字段，并去重。要使用gson库，为json格式生成对应的bean，再使用bean来解析 。json格式如下 {“words”:[{“word”:”name”,”desc”:”xxx”},{“word”:”age”,”desc”:”xxx”}]}</p>
+</blockquote>
+<p>输出：</p>
+<p><img src="/../images/2023-03-11-chatgpt/image-json-bean-example.jpg" alt="image-json-bean-example"></p>
+<p>以下是解析代码： <img src="/../images/2023-03-11-chatgpt/image-generate-code-using-gson.jpg" alt="image-generate-code-using-gson"></p>
+<h3 id="识别句子里的对话"><a href="#识别句子里的对话" class="headerlink" title="识别句子里的对话"></a>识别句子里的对话</h3><p><img src="/../images/2023-03-11-chatgpt/image-extract-dialogues.jpg" alt="image-extract-dialogues"></p>
+<h3 id="文本情感分析"><a href="#文本情感分析" class="headerlink" title="文本情感分析"></a>文本情感分析</h3><p>输入：</p>
+<blockquote>
+<p>以下是来自电商网站的评论。分析其表达的是好评还是差评。 </p>
+<p>“物流为什么这么慢，下单都一周了。</p>
+</blockquote>
+<p>输出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这则评论表达的是差评。</span><br><span class="line"></span><br><span class="line">该评论表达了对物流服务的不满，评论者指出物流速度太慢，下单已经一周了，这暗示他们可能对订单的处理和交付时间有期望和要求。因此，评论者对此体验不满意，给出了负面评价。</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="颜文字情感分析"><a href="#颜文字情感分析" class="headerlink" title="颜文字情感分析"></a>颜文字情感分析</h3><p>输入：</p>
+<blockquote>
+<p>๐•ᴗ•๐这个颜文字表达的含义</p>
+</blockquote>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这个颜文字๐•ᴗ•๐通常被认为是一种可爱或卡哇伊的表情。它由括号和一些符号组成，其中的ᴗ表示一个眼睛，而๐则表示圆形的脸和另一个眼睛。这个颜文字的含义可以根据上下文而有所变化，但通常用于表达喜爱、高兴或感谢。这个表情符号在互联网上非常流行，特别是在社交媒体平台上。</span><br></pre></td></tr></table></figure>
+
+<h2 id="对于自媒体"><a href="#对于自媒体" class="headerlink" title="对于自媒体"></a>对于自媒体</h2><h3 id="小红书文案"><a href="#小红书文案" class="headerlink" title="小红书文案"></a>小红书文案</h3><p>输入： </p>
+<blockquote>
+<p> 给定一句话，帮我生成一篇小红书的帖子。先生成标题，然后是文案，文案带几个emoji，最后再带上几个话题标签。 </p>
+<p> 我今天去了家附近的猫咖。</p>
+</blockquote>
+<p>输出：</p>
+<p><img src="/../images/2023-03-11-chatgpt/image-xiaohongshu-post.png" alt="image-xiaohongshu-post"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E6%99%AE%E9%80%9A%E4%BA%BA"><span class="toc-number">1.</span> <span class="toc-text">对于普通人</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%A5%BD%E8%AF%84"><span class="toc-number">1.1.</span> <span class="toc-text">写好评</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E5%AD%A6%E7%94%9F%E3%80%81%E6%89%93%E5%B7%A5%E4%BA%BA"><span class="toc-number">2.</span> <span class="toc-text">对于学生、打工人</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%AE%E4%BD%A0%E6%89%BE%E8%AE%BA%E6%96%87%E6%80%9D%E8%B7%AF"><span class="toc-number">2.1.</span> <span class="toc-text">帮你找论文思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%8B%B1%E8%AF%AD"><span class="toc-number">2.2.</span> <span class="toc-text">学习英语</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BF%BB%E8%AF%91"><span class="toc-number">2.2.1.</span> <span class="toc-text">翻译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E8%8B%B1%E8%AF%AD%E4%BD%9C%E6%96%87"><span class="toc-number">2.2.2.</span> <span class="toc-text">写英语作文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E5%8F%A5%E5%AD%90%E9%87%8C%E7%9A%84%E7%94%9F%E8%AF%8D"><span class="toc-number">2.2.3.</span> <span class="toc-text">识别句子里的生词</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E8%8B%B1%E8%AF%AD%E4%BE%8B%E5%8F%A5"><span class="toc-number">2.2.4.</span> <span class="toc-text">生成英语例句</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E5%BC%80%E5%8F%91%E8%80%85"><span class="toc-number">3.</span> <span class="toc-text">对于开发者</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%BE%E5%87%BA%E7%94%9F%E8%AF%8D%E5%B9%B6%E4%BB%A5json%E6%A0%BC%E5%BC%8F%E8%BE%93%E5%87%BA"><span class="toc-number">3.1.</span> <span class="toc-text">找出生词并以json格式输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96json"><span class="toc-number">3.2.</span> <span class="toc-text">格式化json</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90json%E8%A7%A3%E6%9E%90%E4%BB%A3%E7%A0%81"><span class="toc-number">3.3.</span> <span class="toc-text">生成json解析代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E5%8F%A5%E5%AD%90%E9%87%8C%E7%9A%84%E5%AF%B9%E8%AF%9D"><span class="toc-number">3.4.</span> <span class="toc-text">识别句子里的对话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90"><span class="toc-number">3.5.</span> <span class="toc-text">文本情感分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%9C%E6%96%87%E5%AD%97%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90"><span class="toc-number">3.6.</span> <span class="toc-text">颜文字情感分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E8%87%AA%E5%AA%92%E4%BD%93"><span class="toc-number">4.</span> <span class="toc-text">对于自媒体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BA%A2%E4%B9%A6%E6%96%87%E6%A1%88"><span class="toc-number">4.1.</span> <span class="toc-text">小红书文案</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&text=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&title=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&is_video=false&description=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=如果向朋友推荐chatGPT，我会举哪些例子？&body=Check out this article: https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&title=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&title=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&title=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&title=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&name=如果向朋友推荐chatGPT，我会举哪些例子？&description=&lt;style&gt; img{ zoom:80%; } &lt;/style&gt;
+
+
+
+
+
+&lt;h2 id=&#34;对于普通人&#34;&gt;&lt;a href=&#34;#对于普通人&#34; class=&#34;headerlink&#34; title=&#34;对于普通人&#34;&gt;&lt;/a&gt;对于普通人&lt;/h2&gt;&lt;h3 id=&#34;写好评&#34;&gt;&lt;a href=&#34;#写好评&#34; class=&#34;headerlink&#34; title=&#34;写好评&#34;&gt;&lt;/a&gt;写好评&lt;/h3&gt;&lt;p&gt;输入： &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;为外卖餐厅生成一条好评，你吃的是：麻辣烫&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;输出：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/../images/2023-03-11-chatgpt/image-good-review-example.jpg&#34; alt=&#34;image-good-review-example&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zty5678.github.io/2023/03/11/2023-03-11-chatgpt/&t=如果向朋友推荐chatGPT，我会举哪些例子？"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    zty5678
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
