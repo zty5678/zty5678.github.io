@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="img{ zoom:80%; }   背景在日常刷抖音、小红书时，经常会看到一些表情包想要保存下来，如果直接保存会有水印，于是每次都需要截图、自己裁剪，整个流程比较麻烦。 于是我我用 cursor 开发了一个表情包智能裁剪工具，可以自动识别并去除图片周围多余的边框，精准保留表情包的核心内容。 工具地址： https:&#x2F;&#x2F;zty5678.github.io&#x2F;tools&#x2F;meme-crop&#x2F;inde">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片">
+<meta property="og:url" content="https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/index.html">
+<meta property="og:site_name" content="zty5678&#39;s blog">
+<meta property="og:description" content="img{ zoom:80%; }   背景在日常刷抖音、小红书时，经常会看到一些表情包想要保存下来，如果直接保存会有水印，于是每次都需要截图、自己裁剪，整个流程比较麻烦。 于是我我用 cursor 开发了一个表情包智能裁剪工具，可以自动识别并去除图片周围多余的边框，精准保留表情包的核心内容。 工具地址： https:&#x2F;&#x2F;zty5678.github.io&#x2F;tools&#x2F;meme-crop&#x2F;inde">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-27T17:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-27T10:22:24.663Z">
+<meta property="article:author" content="zty5678">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="图像处理">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2025/07/27/2023-03-11-chatgpt/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&text=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&title=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&is_video=false&description=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片&body=Check out this article: https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&title=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&title=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&title=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&title=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&name=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片&description=&lt;style&gt; img{ zoom:80%; } &lt;/style&gt;
+
+&lt;h1 id=&#34;背景&#34;&gt;&lt;a href=&#34;#背景&#34; class=&#34;headerlink&#34; title=&#34;背景&#34;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;在日常刷抖音、小红书时，经常会看到一些表情包想要保存下来，如果直接保存会有水印，于是每次都需要截图、自己裁剪，整个流程比较麻烦。&lt;/p&gt;
+&lt;p&gt;于是我我用 cursor 开发了一个表情包智能裁剪工具，可以自动识别并去除图片周围多余的边框，精准保留表情包的核心内容。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;工具地址：&lt;/strong&gt; &lt;a href=&#34;https://zty5678.github.io/tools/meme-crop/index.html&#34;&gt;https://zty5678.github.io/tools/meme-crop/index.html&lt;/a&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&t=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E7%89%B9%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">功能特点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%AF-%E6%99%BA%E8%83%BD%E8%AF%86%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text">🎯 智能识别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A4%96-%E8%87%AA%E5%8A%A8%E5%A4%84%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">🤖 自动处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E6%93%8D%E4%BD%9C%E7%AE%80%E5%8D%95"><span class="toc-number">2.3.</span> <span class="toc-text">💡 操作简单</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E7%9A%84%E7%97%9B%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">解决的痛点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E8%A3%81%E5%89%AA%E7%9A%84%E9%BA%BB%E7%83%A6"><span class="toc-number">4.1.</span> <span class="toc-text">手动裁剪的麻烦</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7%E7%9A%84%E5%B1%80%E9%99%90"><span class="toc-number">4.2.</span> <span class="toc-text">在线工具的局限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86%E7%9A%84%E9%9C%80%E6%B1%82"><span class="toc-number">4.3.</span> <span class="toc-text">批量处理的需求</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">后续优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">zty5678</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-07-27T17:00:00.000Z" class="dt-published" itemprop="datePublished">2025-07-27</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag">前端开发</a>, <a class="p-category" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">图像处理</a>, <a class="p-category" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <style> img{ zoom:80%; } </style>
+
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在日常刷抖音、小红书时，经常会看到一些表情包想要保存下来，如果直接保存会有水印，于是每次都需要截图、自己裁剪，整个流程比较麻烦。</p>
+<p>于是我我用 cursor 开发了一个表情包智能裁剪工具，可以自动识别并去除图片周围多余的边框，精准保留表情包的核心内容。</p>
+<p><strong>工具地址：</strong> <a href="https://zty5678.github.io/tools/meme-crop/index.html">https://zty5678.github.io/tools/meme-crop/index.html</a></p>
+<span id="more"></span>
+
+<h1 id="功能特点"><a href="#功能特点" class="headerlink" title="功能特点"></a>功能特点</h1><h2 id="🎯-智能识别"><a href="#🎯-智能识别" class="headerlink" title="🎯 智能识别"></a>🎯 智能识别</h2><ul>
+<li>专为抖音、小红书评论区表情包设计</li>
+<li>自动分析图片内容，智能识别需要保留的区域</li>
+<li>精准去除黑边、白边等无用区域</li>
+</ul>
+<h2 id="🤖-自动处理"><a href="#🤖-自动处理" class="headerlink" title="🤖 自动处理"></a>🤖 自动处理</h2><ul>
+<li>上传图片后自动进行智能分析</li>
+<li>无需手动调整，一键完成裁剪</li>
+</ul>
+<h2 id="💡-操作简单"><a href="#💡-操作简单" class="headerlink" title="💡 操作简单"></a>💡 操作简单</h2><ul>
+<li>选择表情包图片</li>
+<li>点击智能裁剪</li>
+<li>确认并下载结果</li>
+</ul>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>使用方法非常简单：</p>
+<ol>
+<li><strong>选择图片</strong>：点击”选择表情包图片”按钮，上传需要裁剪的表情包</li>
+<li><strong>智能裁剪</strong>：点击”智能裁剪”按钮，工具会自动分析并处理图片</li>
+<li><strong>预览结果</strong>：在裁剪结果区域查看处理效果</li>
+<li><strong>下载保存</strong>：满意后点击”下载裁剪结果”保存到本地</li>
+</ol>
+<p>整个过程只需要几秒钟，就能得到一个干净、精准的表情包图片。</p>
+<h1 id="解决的痛点"><a href="#解决的痛点" class="headerlink" title="解决的痛点"></a>解决的痛点</h1><h2 id="手动裁剪的麻烦"><a href="#手动裁剪的麻烦" class="headerlink" title="手动裁剪的麻烦"></a>手动裁剪的麻烦</h2><p>以前需要使用 Photoshop 或其他图片编辑软件，对于简单的去边框需求来说太过重型。</p>
+<h2 id="在线工具的局限"><a href="#在线工具的局限" class="headerlink" title="在线工具的局限"></a>在线工具的局限</h2><p>市面上的在线裁剪工具大多需要手动框选区域，对于表情包的特殊需求支持不够好。</p>
+<h2 id="批量处理的需求"><a href="#批量处理的需求" class="headerlink" title="批量处理的需求"></a>批量处理的需求</h2><p>当有多张表情包需要处理时，这个工具可以大大提高效率。</p>
+<h1 id="后续优化"><a href="#后续优化" class="headerlink" title="后续优化"></a>后续优化</h1><p>目前只测试了抖音和小红书。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>开发这个小工具的初衷很简单，就是想解决日常使用表情包时遇到的小问题。虽然功能不复杂，但确实能够提升使用体验。</p>
+<p>如果你也经常使用表情包，不妨试试这个工具：<a href="https://zty5678.github.io/tools/meme-crop/index.html">https://zty5678.github.io/tools/meme-crop/index.html</a></p>
+<p>欢迎大家使用并提出改进建议！</p>
+<hr>
+<p><em>如果觉得这个工具有用，欢迎分享给更多需要的朋友~</em> </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E7%89%B9%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">功能特点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%AF-%E6%99%BA%E8%83%BD%E8%AF%86%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text">🎯 智能识别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A4%96-%E8%87%AA%E5%8A%A8%E5%A4%84%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">🤖 自动处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E6%93%8D%E4%BD%9C%E7%AE%80%E5%8D%95"><span class="toc-number">2.3.</span> <span class="toc-text">💡 操作简单</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E7%9A%84%E7%97%9B%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">解决的痛点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E8%A3%81%E5%89%AA%E7%9A%84%E9%BA%BB%E7%83%A6"><span class="toc-number">4.1.</span> <span class="toc-text">手动裁剪的麻烦</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7%E7%9A%84%E5%B1%80%E9%99%90"><span class="toc-number">4.2.</span> <span class="toc-text">在线工具的局限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86%E7%9A%84%E9%9C%80%E6%B1%82"><span class="toc-number">4.3.</span> <span class="toc-text">批量处理的需求</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">后续优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&text=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&title=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&is_video=false&description=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片&body=Check out this article: https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&title=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&title=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&title=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&title=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&name=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片&description=&lt;style&gt; img{ zoom:80%; } &lt;/style&gt;
+
+&lt;h1 id=&#34;背景&#34;&gt;&lt;a href=&#34;#背景&#34; class=&#34;headerlink&#34; title=&#34;背景&#34;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;在日常刷抖音、小红书时，经常会看到一些表情包想要保存下来，如果直接保存会有水印，于是每次都需要截图、自己裁剪，整个流程比较麻烦。&lt;/p&gt;
+&lt;p&gt;于是我我用 cursor 开发了一个表情包智能裁剪工具，可以自动识别并去除图片周围多余的边框，精准保留表情包的核心内容。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;工具地址：&lt;/strong&gt; &lt;a href=&#34;https://zty5678.github.io/tools/meme-crop/index.html&#34;&gt;https://zty5678.github.io/tools/meme-crop/index.html&lt;/a&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zty5678.github.io/2025/07/27/2025-07-27-meme-crop-tool/&t=开发了一个表情包智能裁剪小工具 - 自动裁剪抖音&amp;小红书的评论区图片"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    zty5678
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
