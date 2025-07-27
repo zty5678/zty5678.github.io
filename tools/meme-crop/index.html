@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表情包智能裁剪工具 - 抖音小红书专用</title>
+  <!-- 引入 Cropper.js 库 -->
+  <link rel="stylesheet" href="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.css">
+  <script src="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 28px;
+    }
+    
+    .description {
+      text-align: center;
+      margin-bottom: 25px;
+      padding: 15px;
+      background-color: #f8f9ff;
+      border-radius: 8px;
+      border-left: 4px solid #4a6cf7;
+    }
+    
+    .description p {
+      margin: 8px 0;
+      color: #555;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    
+    .description p:first-child {
+      font-weight: 600;
+      color: #4a6cf7;
+    }
+    
+    .description .tips {
+      font-size: 14px;
+      color: #888;
+      margin-top: 12px;
+      font-style: italic;
+    }
+    
+    .upload-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .file-input {
+      display: none;
+    }
+    
+    .upload-btn {
+      display: inline-block;
+      background-color: #4a6cf7;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+    
+    .upload-btn:hover {
+      background-color: #3a5ce5;
+    }
+    
+    .cropper-container-wrapper {
+      height: 400px;
+      margin-bottom: 20px;
+      display: none;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .cropper-container {
+      height: 100%;
+      width: 100%;
+    }
+    
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+    
+    .btn-primary {
+      background-color: #4a6cf7;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #3a5ce5;
+    }
+    
+    .btn-secondary {
+      background-color: #e0e0e0;
+      color: #333;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #d0d0d0;
+    }
+    
+    .preview-container {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .preview-image {
+      max-width: 100%;
+      max-height: 300px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>表情包智能裁剪工具</h1>
+    
+    <div class="description">
+      <p>🎯 专为抖音、小红书评论区表情包设计的智能裁剪工具</p>
+      <p>🤖 自动识别并去除图片周围的黑边、白边，精准保留表情包内容</p>
+      <p class="tips">💡 支持各种格式的表情包图片，上传后自动智能分析裁剪</p>
+    </div>
+    
+    <div class="upload-container">
+      <input type="file" id="file-input" class="file-input" accept="image/*">
+      <label for="file-input" class="upload-btn">选择表情包图片</label>
+    </div>
+    
+    <div id="cropper-container-wrapper" class="cropper-container-wrapper">
+      <div class="cropper-container"></div>
+    </div>
+    
+    <div id="btn-container" class="btn-container" style="display: none;">
+      <button id="auto-crop-btn" class="btn btn-secondary">智能裁剪</button>
+      <button id="crop-btn" class="btn btn-primary">确认裁剪</button>
+      <button id="reset-btn" class="btn btn-secondary">重置缩放比例</button>
+      <button id="clear-btn" class="btn btn-secondary">重新选择图片</button>
+    </div>
+    
+    <div id="preview-container" class="preview-container">
+      <h3>裁剪结果</h3>
+      <img id="preview-image" class="preview-image">
+      <div style="margin-top: 15px;">
+        <a id="download-btn" class="btn btn-primary" download="cropped-image.png">下载裁剪结果</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const fileInput = document.getElementById('file-input');
+      const cropperContainerWrapper = document.getElementById('cropper-container-wrapper');
+      const cropperContainer = document.querySelector('.cropper-container');
+      const btnContainer = document.getElementById('btn-container');
+      const cropBtn = document.getElementById('crop-btn');
+      const resetBtn = document.getElementById('reset-btn');
+      const autoCropBtn = document.getElementById('auto-crop-btn');
+      const clearBtn = document.getElementById('clear-btn');
+      const previewContainer = document.getElementById('preview-container');
+      const previewImage = document.getElementById('preview-image');
+      const downloadBtn = document.getElementById('download-btn');
+      
+      let cropper = null;
+      let image = null;
+      
+      // 智能滚动到按钮区域的函数
+      function smoothScrollToButtons(delay = 200) {
+        setTimeout(() => {
+          // 计算按钮容器的位置
+          const btnRect = btnContainer.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          
+          // 如果按钮不完全可见，则滚动
+          if (btnRect.bottom > windowHeight * 0.9) {
+            // 滚动到能看到按钮的位置，留出一些底部空间
+            const targetScroll = window.scrollY + btnRect.bottom - windowHeight + 80;
+            
+            window.scrollTo({
+              top: Math.max(0, targetScroll),
+              behavior: 'smooth'
+            });
+          }
+        }, delay);
+      }
+      
+      // 文件上传处理
+      fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        // 重置
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+          cropperContainer.innerHTML = '';
+        }
+        
+        // 显示裁剪区域
+        cropperContainerWrapper.style.display = 'block';
+        btnContainer.style.display = 'flex';
+        previewContainer.style.display = 'none';
+        
+        // 智能滚动到按钮区域
+        smoothScrollToButtons(200);
+        
+        // 创建图片元素
+        image = new Image();
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          image.src = e.target.result;
+          image.alt = '上传的图片';
+          cropperContainer.appendChild(image);
+          
+          // 初始化裁剪器
+          cropper = new Cropper(image, {
+            viewMode: 1,
+            aspectRatio: NaN,
+            autoCropArea: 0.8,
+            background: true,
+            ready: function() {
+              // 图片加载完成后自动执行智能裁剪
+              setTimeout(() => {
+                if (cropper) {
+                  performSmartCrop();
+                }
+              }, 300);
+              
+              // 裁剪器初始化完成后，确保滚动到按钮区域
+              smoothScrollToButtons(800);
+            }
+          });
+        };
+        
+        reader.readAsDataURL(file);
+      });
+      
+      // 手动裁剪处理
+      cropBtn.addEventListener('click', function() {
+        if (!cropper) return;
+        
+        const canvas = cropper.getCroppedCanvas({
+          fillColor: '#fff'
+        });
+        
+        const dataUrl = canvas.toDataURL('image/png');
+        previewImage.src = dataUrl;
+        downloadBtn.href = dataUrl;
+        
+        previewContainer.style.display = 'block';
+      });
+      
+      // 重置缩放比例 - 重新处理当前图片
+      resetBtn.addEventListener('click', function() {
+        if (!cropper || !image) return;
+        
+        // 保存当前图片源
+        const currentImageSrc = image.src;
+        
+        // 销毁当前裁剪器
+        cropper.destroy();
+        cropper = null;
+        cropperContainer.innerHTML = '';
+        
+        // 隐藏预览区域
+        previewContainer.style.display = 'none';
+        
+        // 重新创建图片元素和裁剪器
+        image = new Image();
+        image.src = currentImageSrc;
+        image.alt = '上传的图片';
+        cropperContainer.appendChild(image);
+        
+        // 重新初始化裁剪器
+        cropper = new Cropper(image, {
+          viewMode: 1,
+          aspectRatio: NaN,
+          autoCropArea: 0.8,
+          background: true,
+          ready: function() {
+            // 重新执行智能裁剪
+            setTimeout(() => {
+              if (cropper) {
+                performSmartCrop();
+              }
+            }, 300);
+            
+            // 重置后也滚动到按钮区域
+            smoothScrollToButtons(800);
+          }
+        });
+        
+        console.log('重置缩放比例，重新处理图片');
+      });
+      
+      // 智能裁剪按钮
+      autoCropBtn.addEventListener('click', function() {
+        if (!cropper) return;
+        performSmartCrop();
+      });
+      
+      // 重新选择图片 - 完全清空
+      clearBtn.addEventListener('click', function() {
+        fileInput.value = '';
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+          cropperContainer.innerHTML = '';
+        }
+        image = null;
+        cropperContainerWrapper.style.display = 'none';
+        btnContainer.style.display = 'none';
+        previewContainer.style.display = 'none';
+        
+        console.log('清空所有内容，可以重新选择图片');
+      });
+      
+      // 智能裁剪主函数
+      function performSmartCrop() {
+        console.log("开始智能裁剪分析...");
+        
+        try {
+          const canvasData = cropper.getCanvasData();
+          const imageElement = cropper.image;
+          
+          // 创建分析用的临时画布
+          const tempCanvas = document.createElement('canvas');
+          const ctx = tempCanvas.getContext('2d');
+          
+          // 使用适中的分辨率进行分析
+          const analysisWidth = 200;
+          const analysisHeight = Math.round(analysisWidth * imageElement.naturalHeight / imageElement.naturalWidth);
+          
+          tempCanvas.width = analysisWidth;
+          tempCanvas.height = analysisHeight;
+          
+          // 绘制图像到分析画布
+          ctx.drawImage(imageElement, 0, 0, analysisWidth, analysisHeight);
+          const imageData = ctx.getImageData(0, 0, analysisWidth, analysisHeight);
+          
+          // 分析背景类型
+          const backgroundType = analyzeBackgroundType(imageData.data, analysisWidth, analysisHeight);
+          console.log('检测到背景类型:', backgroundType);
+          
+          // 计算内容重心
+          const contentCenter = calculateContentCenter(imageData.data, analysisWidth, analysisHeight, backgroundType);
+          console.log('内容重心:', contentCenter);
+          
+          // 计算自适应阈值
+          const thresholds = calculateAdaptiveThresholds(imageData.data, analysisWidth, analysisHeight, backgroundType);
+          console.log('自适应阈值:', thresholds);
+          
+          // 检测最优边界
+          const boundaries = detectOptimalBoundaries(imageData.data, analysisWidth, analysisHeight, contentCenter, thresholds, backgroundType);
+          console.log('检测到的边界:', boundaries);
+          
+          // 应用裁剪区域
+          applyCropBoundaries(cropper, imageElement, canvasData, analysisWidth, analysisHeight, boundaries);
+          
+        } catch (error) {
+          console.error('智能裁剪出错:', error);
+          // 降级到基础裁剪
+          basicCrop();
+        }
+      }
+      
+      // 分析背景类型
+      function analyzeBackgroundType(imageData, width, height) {
+        const sampleSize = Math.min(width, height) * 0.1;
+        const samples = [];
+        
+        // 采样四个角落和边缘中心
+        const samplePoints = [
+          // 四个角落
+          {x: 0, y: 0}, {x: width-1, y: 0}, 
+          {x: 0, y: height-1}, {x: width-1, y: height-1},
+          // 边缘中心
+          {x: width/2, y: 0}, {x: width/2, y: height-1},
+          {x: 0, y: height/2}, {x: width-1, y: height/2}
+        ];
+        
+        for (const point of samplePoints) {
+          const x = Math.floor(point.x);
+          const y = Math.floor(point.y);
+          const idx = (y * width + x) * 4;
+          const brightness = (imageData[idx] + imageData[idx + 1] + imageData[idx + 2]) / 3;
+          samples.push(brightness);
+        }
+        
+        const avgBrightness = samples.reduce((a, b) => a + b, 0) / samples.length;
+        const darkSamples = samples.filter(b => b < 50).length;
+        const lightSamples = samples.filter(b => b > 200).length;
+        
+        if (darkSamples > lightSamples || avgBrightness < 80) {
+          return 'dark';
+        } else {
+          return 'light';
+        }
+      }
+      
+      // 计算内容重心
+      function calculateContentCenter(imageData, width, height, backgroundType) {
+        let totalWeight = 0;
+        let weightedX = 0;
+        let weightedY = 0;
+        
+        const isDark = backgroundType === 'dark';
+        const threshold = isDark ? 60 : 180;
+        
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4;
+            const brightness = (imageData[idx] + imageData[idx + 1] + imageData[idx + 2]) / 3;
+            
+            let weight = 0;
+            if (isDark) {
+              // 暗背景：亮度越高权重越大
+              if (brightness > threshold) {
+                weight = (brightness - threshold) / (255 - threshold);
+              }
+            } else {
+              // 亮背景：亮度越低权重越大
+              if (brightness < threshold) {
+                weight = (threshold - brightness) / threshold;
+              }
+            }
+            
+            if (weight > 0) {
+              totalWeight += weight;
+              weightedX += x * weight;
+              weightedY += y * weight;
+            }
+          }
+        }
+        
+        if (totalWeight > 0) {
+          return {
+            x: Math.round(weightedX / totalWeight),
+            y: Math.round(weightedY / totalWeight)
+          };
+        } else {
+          return {
+            x: Math.floor(width / 2),
+            y: Math.floor(height / 2)
+          };
+        }
+      }
+      
+      // 计算自适应阈值
+      function calculateAdaptiveThresholds(imageData, width, height, backgroundType) {
+        const histogram = new Array(256).fill(0);
+        
+        // 构建亮度直方图
+        for (let i = 0; i < width * height; i++) {
+          const idx = i * 4;
+          const brightness = Math.round((imageData[idx] + imageData[idx + 1] + imageData[idx + 2]) / 3);
+          histogram[brightness]++;
+        }
+        
+        // 找到主要峰值
+        const isDark = backgroundType === 'dark';
+        let backgroundPeak = 0;
+        let contentPeak = 255;
+        let maxBackgroundCount = 0;
+        let maxContentCount = 0;
+        
+        if (isDark) {
+          // 暗背景
+          for (let i = 0; i < 80; i++) {
+            if (histogram[i] > maxBackgroundCount) {
+              maxBackgroundCount = histogram[i];
+              backgroundPeak = i;
+            }
+          }
+          for (let i = 80; i < 256; i++) {
+            if (histogram[i] > maxContentCount) {
+              maxContentCount = histogram[i];
+              contentPeak = i;
+            }
+          }
+        } else {
+          // 亮背景
+          for (let i = 180; i < 256; i++) {
+            if (histogram[i] > maxBackgroundCount) {
+              maxBackgroundCount = histogram[i];
+              backgroundPeak = i;
+            }
+          }
+          for (let i = 0; i < 180; i++) {
+            if (histogram[i] > maxContentCount) {
+              maxContentCount = histogram[i];
+              contentPeak = i;
+            }
+          }
+        }
+        
+        const backgroundThreshold = isDark ? 
+          Math.min(backgroundPeak + 30, 70) : 
+          Math.max(backgroundPeak - 30, 190);
+          
+        const contentThreshold = isDark ?
+          Math.max(contentPeak - 40, backgroundThreshold + 25) :
+          Math.min(contentPeak + 40, backgroundThreshold - 25);
+        
+        return {
+          background: backgroundThreshold,
+          content: contentThreshold,
+          isDark: isDark
+        };
+      }
+      
+      // 检测最优边界
+      function detectOptimalBoundaries(imageData, width, height, center, thresholds, backgroundType) {
+        const isDark = thresholds.isDark;
+        const bgThreshold = thresholds.background;
+        const contentThreshold = thresholds.content;
+        
+        // 从中心向四个方向搜索边界
+        const boundaries = {
+          top: 0,
+          bottom: height - 1,
+          left: 0,
+          right: width - 1
+        };
+        
+        // 向上搜索
+        for (let y = center.y; y >= 0; y--) {
+          let backgroundPixels = 0;
+          const checkWidth = Math.min(width, Math.max(30, width * 0.8));
+          const startX = Math.floor((width - checkWidth) / 2);
+          
+          for (let x = startX; x < startX + checkWidth; x++) {
+            const idx = (y * width + x) * 4;
+            const brightness = (imageData[idx] + imageData[idx + 1] + imageData[idx + 2]) / 3;
+            
+            if (isDark ? brightness < bgThreshold : brightness > bgThreshold) {
+              backgroundPixels++;
+            }
+          }
+          
+          if (backgroundPixels > checkWidth * 0.8) {
+            boundaries.top = Math.min(y + 2, center.y);
+            break;
+          }
+        }
+        
+        // 向下搜索
+        for (let y = center.y; y < height; y++) {
+          let backgroundPixels = 0;
+          const checkWidth = Math.min(width, Math.max(30, width * 0.8));
+          const startX = Math.floor((width - checkWidth) / 2);
+          
+          for (let x = startX; x < startX + checkWidth; x++) {
+            const idx = (y * width + x) * 4;
+            const brightness = (imageData[idx] + imageData[idx + 1] + imageData[idx + 2]) / 3;
+            
+            if (isDark ? brightness < bgThreshold : brightness > bgThreshold) {
+              backgroundPixels++;
+            }
+          }
+          
+          if (backgroundPixels > checkWidth * 0.8) {
+            boundaries.bottom = Math.max(y - 2, center.y);
+            break;
+          }
+        }
+        
+        // 向左搜索
+        for (let x = center.x; x >= 0; x--) {
+          let backgroundPixels = 0;
+          const checkHeight = Math.min(height, Math.max(30, height * 0.8));
+          const startY = Math.floor((height - checkHeight) / 2);
+          
+          for (let y = startY; y < startY + checkHeight; y++) {
+            const idx = (y * width + x) * 4;
+            const brightness = (imageData[idx] + imageData[idx + 1] + imageData[idx + 2]) / 3;
+            
+            if (isDark ? brightness < bgThreshold : brightness > bgThreshold) {
+              backgroundPixels++;
+            }
+          }
+          
+          if (backgroundPixels > checkHeight * 0.8) {
+            boundaries.left = Math.min(x + 2, center.x);
+            break;
+          }
+        }
+        
+        // 向右搜索
+        for (let x = center.x; x < width; x++) {
+          let backgroundPixels = 0;
+          const checkHeight = Math.min(height, Math.max(30, height * 0.8));
+          const startY = Math.floor((height - checkHeight) / 2);
+          
+          for (let y = startY; y < startY + checkHeight; y++) {
+            const idx = (y * width + x) * 4;
+            const brightness = (imageData[idx] + imageData[idx + 1] + imageData[idx + 2]) / 3;
+            
+            if (isDark ? brightness < bgThreshold : brightness > bgThreshold) {
+              backgroundPixels++;
+            }
+          }
+          
+          if (backgroundPixels > checkHeight * 0.8) {
+            boundaries.right = Math.max(x - 2, center.x);
+            break;
+          }
+        }
+        
+        return boundaries;
+      }
+      
+      // 应用裁剪边界
+      function applyCropBoundaries(cropper, imageElement, canvasData, analysisWidth, analysisHeight, boundaries) {
+        // 计算缩放比例
+        const scaleX = imageElement.naturalWidth / analysisWidth;
+        const scaleY = imageElement.naturalHeight / analysisHeight;
+        
+        // 转换到原始图像坐标
+        const originalBounds = {
+          left: Math.round(boundaries.left * scaleX),
+          top: Math.round(boundaries.top * scaleY),
+          width: Math.round((boundaries.right - boundaries.left) * scaleX),
+          height: Math.round((boundaries.bottom - boundaries.top) * scaleY)
+        };
+        
+        // 转换到canvas坐标
+        const canvasScaleX = canvasData.width / imageElement.naturalWidth;
+        const canvasScaleY = canvasData.height / imageElement.naturalHeight;
+        
+        const cropBox = {
+          left: canvasData.left + originalBounds.left * canvasScaleX,
+          top: canvasData.top + originalBounds.top * canvasScaleY,
+          width: originalBounds.width * canvasScaleX,
+          height: originalBounds.height * canvasScaleY
+        };
+        
+        // 验证边界合理性
+        if (cropBox.width > 10 && cropBox.height > 10 && 
+            cropBox.left >= canvasData.left && cropBox.top >= canvasData.top &&
+            cropBox.left + cropBox.width <= canvasData.left + canvasData.width &&
+            cropBox.top + cropBox.height <= canvasData.top + canvasData.height) {
+          
+          console.log('应用智能裁剪边界:', cropBox);
+          cropper.setCropBoxData(cropBox);
+        } else {
+          console.log('边界无效，使用基础裁剪');
+          basicCrop();
+        }
+      }
+      
+      // 基础裁剪（降级方案）
+      function basicCrop() {
+        if (!cropper) return;
+        
+        const containerData = cropper.getContainerData();
+        const imageData = cropper.getImageData();
+        
+        // 使用80%的图像区域作为基础裁剪
+        const cropWidth = imageData.width * 0.8;
+        const cropHeight = imageData.height * 0.8;
+        const cropLeft = imageData.left + (imageData.width - cropWidth) / 2;
+        const cropTop = imageData.top + (imageData.height - cropHeight) / 2;
+        
+        cropper.setCropBoxData({
+          left: cropLeft,
+          top: cropTop,
+          width: cropWidth,
+          height: cropHeight
+        });
+        
+        console.log('应用基础裁剪');
+      }
+    });
+  </script>
+</body>
+</html> 
