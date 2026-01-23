@@ -27,18 +27,19 @@ $(document).ready(function() {
   if ($(".post").length) {
     var menu = $("#menu");
     var nav = $("#menu > #nav");
+    var toc = $("#toc");
     var menuIcon = $("#menu-icon, #menu-icon-tablet");
 
     /**
-     * Display the menu on hi-res laptops and desktops.
+     * Always display the menu and TOC on desktop.
      */
-    if ($(document).width() >= 1440) {
-      menu.show();
-      menuIcon.addClass("active");
-    }
+    menu.show();
+    nav.show();
+    toc.show();
+    menuIcon.addClass("active");
 
     /**
-     * Display the menu if the menu icon is clicked.
+     * Toggle menu visibility when menu icon is clicked.
      */
     menuIcon.click(function() {
       if (menu.is(":hidden")) {
@@ -52,18 +53,15 @@ $(document).ready(function() {
     });
 
     /**
-     * Add a scroll listener to the menu to hide/show the navigation links.
+     * Keep navigation and TOC always visible on scroll.
      */
     if (menu.length) {
       $(window).on("scroll", function() {
         var topDistance = menu.offset().top;
 
-        // hide only the navigation links on desktop
-        if (!nav.is(":visible") && topDistance < 50) {
-          nav.show();
-        } else if (nav.is(":visible") && topDistance > 100) {
-          nav.hide();
-        }
+        // Always keep nav and toc visible
+        nav.show();
+        toc.show();
 
         // on tablet, hide the navigation icon as well and show a "scroll to top
         // icon" instead
