@@ -286,8 +286,16 @@
         
         const dataUrl = canvas.toDataURL('image/png');
         previewImage.src = dataUrl;
-        downloadBtn.href = dataUrl;
-        
+
+        // 使用 Blob URL 代替 data URL，避免 Chrome 在 HTTPS 下禁止下载 data URL 的限制
+        canvas.toBlob(function(blob) {
+          const oldUrl = downloadBtn.href;
+          if (oldUrl && oldUrl.startsWith('blob:')) {
+            URL.revokeObjectURL(oldUrl);
+          }
+          downloadBtn.href = URL.createObjectURL(blob);
+        }, 'image/png');
+
         previewContainer.style.display = 'block';
       });
       
